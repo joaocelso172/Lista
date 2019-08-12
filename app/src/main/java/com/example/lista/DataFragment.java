@@ -3,6 +3,7 @@ package com.example.lista;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.lista.lista.ListCarros;
 import com.example.lista.lista.ListaCarrosFragment;
 
 
@@ -164,9 +166,11 @@ public class DataFragment extends Fragment {
         }else if (inicio && fim) {
             telaCarros = new ListaCarrosFragment();
           //  lockTela = 1;
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+          /*  FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.frameConteudo, telaCarros);
-            transaction.commit();
+            transaction.commit();*/
+            Intent intent = new Intent(getContext(), ListCarros.class);
+            startActivity(intent);
             Toast.makeText(getContext(), "Retirada: " + inicioAlugar + ", Devolução: " + fimAlugar, Toast.LENGTH_SHORT).show();
            // Pagamento.setPagamentos(null);
         }

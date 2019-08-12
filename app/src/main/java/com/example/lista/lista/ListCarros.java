@@ -1,17 +1,15 @@
-package com.example.lista;
+package com.example.lista.lista;
 
-import android.content.Intent;
-import android.os.Build;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
-import com.example.lista.lista.ListCarros;
-import com.example.lista.lista.ListaCarrosFragment;
+import com.example.lista.FiltrosFragment;
+import com.example.lista.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import android.transition.Explode;
-import android.transition.Fade;
-import android.util.Log;
 import android.view.View;
 
 import androidx.core.view.GravityCompat;
@@ -20,46 +18,58 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.Menu;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity
+public class ListCarros extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    Dialog myDialog;
 
-    private Button lista;
-    private Button Calendario;
-    private DataFragment data;
-    private ListaCarrosFragment listCar;
- //   private VisualizacaoFragment visul;
+    private ViewPager viewPager;
+    private SmartTabLayout smartTabLayout;
 
+    private Button Filtros;
+    private FiltrosFragment filtrosFragment;
+    private FrameLayout frameLayout;
+    ImageView imgView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            Explode trans1 = new Explode();
-            trans1.setDuration(3000);
-            Fade trans2 = new Fade();
-            trans2.setDuration(3000);
-
-            getWindow().setExitTransition(trans1);
-            getWindow().setReenterTransition(trans2);
-
-        }*/
-
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_list_carros);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setElevation(0);
+
+        myDialog = new Dialog(this);
+
+        viewPager = findViewById(R.id.vp);
+        smartTabLayout = findViewById(R.id.vpTab);
+
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+                getSupportFragmentManager(),
+                FragmentPagerItems.with(this)
+                        .add("Teste", ListaCarrosFragment.class)
+                        .create()
+        );
+
+        viewPager.setAdapter(adapter);
+        smartTabLayout.setViewPager(viewPager);
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,61 +86,32 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        data = new DataFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameConteudo, data);
-        transaction.commit();
 
-        lista = findViewById(R.id.btnLista);
-
-        lista.setOnClickListener(new View.OnClickListener() {
+        Filtros = findViewById(R.id.btnFilt);
+        Filtros.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // if (data.getLockTela() == 1) {
-                    irLista();
-            //    }else {
-         //           Toast.makeText(getApplicationContext(), "Primeiro escolha as datas", Toast.LENGTH_SHORT).show();
-        //       }
+               ShowPopup();
+             //  irFiltros();
             }
         });
+    }
 
+    public void ShowPopup(){
+        myDialog.setContentView(R.layout.fragment_visualizacao);
+        TextView txtFechar;
+      /*  txtFechar = (TextView) myDialog.findViewById(R.id.txtClose);
 
-        Calendario = findViewById(R.id.btnCalendario);
-        Calendario.setOnClickListener(new View.OnClickListener() {
+        txtFechar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                irData();
+                myDialog.dismiss();
             }
-        });
+        });*/
+      //  myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
 
     }
-
-
-   /* @Override
-    protected void onStart() {
-        super.onStart();
-        Toast.makeText(getApplicationContext(), "a", Toast.LENGTH_SHORT).show();*/
-
-
-
-   public void irLista(){
-       /* listCar = new ListaCarrosFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameConteudo, listCar);
-        transaction.commit();*/
-
-       Intent intent = new Intent(this, ListCarros.class);
-       startActivity(intent);
-    }
-
-
-    public void irData(){
-        data = new DataFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameConteudo, data);
-        transaction.commit();
-    }
-
 
     @Override
     public void onBackPressed() {
@@ -145,7 +126,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.list_carros, menu);
         return true;
     }
 
@@ -188,4 +169,19 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void irFiltros() {
+        frameLayout = findViewById(R.id.framePrincipal);
+       // frameLayout.
+        //frameLayout.setBackgroundColor(Color.GRAY);
+        frameLayout.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
+        filtrosFragment = new FiltrosFragment();
+        FiltrosFragment filtros = new FiltrosFragment();
+        FragmentTransaction filTransaction = getSupportFragmentManager().beginTransaction();
+        filTransaction.replace(R.id.frameFiltro, filtros);
+
+        filTransaction.commit();
+    }
+
+
 }

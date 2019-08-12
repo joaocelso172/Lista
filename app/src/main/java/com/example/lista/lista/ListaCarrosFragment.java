@@ -1,6 +1,7 @@
 package com.example.lista.lista;
 
 
+import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -31,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.lista.FiltrosFragment;
 import com.example.lista.R;
 import com.example.lista.VisualizacaoFragment;
 import com.example.lista.adapter.adapterCar;
@@ -46,10 +48,13 @@ import helper.RecyclerItemClickListener;
  */
 public class ListaCarrosFragment extends Fragment {
 
+    Dialog meuDialog;
+
     private RecyclerView rView;
     private adapterCar adaCar;
     private List<Carro> listaCarros = new ArrayList<>();
     private VisualizacaoFragment visu;
+    private Button Filtros;
     ImageView imgView;
     public ListaCarrosFragment() {
         // Required empty public constructor
@@ -60,6 +65,8 @@ public class ListaCarrosFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        meuDialog = new Dialog(getContext());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             Slide trans1 = new Slide();
             trans1.setDuration(3000);
@@ -79,6 +86,7 @@ public class ListaCarrosFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lista_carros, container, false);
         imgView = view.findViewById(R.id.imageModelo);
+        Filtros = view.findViewById(R.id.btnFiltros);
         rView = view.findViewById(R.id.recyclerCarros);
         rView.addOnItemTouchListener(
                 new RecyclerItemClickListener(
@@ -88,6 +96,8 @@ public class ListaCarrosFragment extends Fragment {
                             @Override
                             public void onItemClick(View view, int position) {
 
+                                meuDialog.setContentView(R.layout.fragment_visualizacao);
+
                                 visu = new VisualizacaoFragment();
                                 Carro carrinho = listaCarros.get(position);
 
@@ -96,8 +106,9 @@ public class ListaCarrosFragment extends Fragment {
                                 FragmentTransaction telaCarro = getFragmentManager().beginTransaction();
                               //  teste.setCustomAnimations(android.R.anim.fade_in, 0);
                               //  teste.addSharedElement(rView, nomeCarro);
-                                telaCarro.replace(R.id.frameConteudo, visu);
+                                telaCarro.replace(R.id.framePrincipal, visu);
                                 telaCarro.commit();
+                                meuDialog.show();
 
                             }
 
@@ -114,6 +125,13 @@ public class ListaCarrosFragment extends Fragment {
                 )
         );
 
+    /*   Filtros.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                irFiltros();
+            }
+        });*/
+
         return view;
 
 
@@ -122,6 +140,32 @@ public class ListaCarrosFragment extends Fragment {
 
    // adaCar = new adapterCar(  );
 
+    public void irFiltros() {
+        FiltrosFragment filtros = new FiltrosFragment();
+        FragmentTransaction filTransaction = getFragmentManager().beginTransaction();
+        filTransaction.replace(R.id.FrameTest, filtros);
+
+        ListaCarrosFragment lcarros = new ListaCarrosFragment();
+
+        filTransaction.commit();
+    }
+
+    public void MostrarPopup(){
+
+        meuDialog.setContentView(R.layout.fragment_visualizacao);
+        TextView txtFechar;
+      /*  txtFechar = (TextView) myDialog.findViewById(R.id.txtClose);
+
+        txtFechar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myDialog.dismiss();
+            }
+        });*/
+        //  myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        meuDialog.show();
+
+    }
 
     public void carregarCarros(){
 
