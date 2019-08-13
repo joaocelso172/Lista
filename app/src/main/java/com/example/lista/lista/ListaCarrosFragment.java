@@ -105,7 +105,6 @@ public class ListaCarrosFragment extends Fragment {
 
                                 FragmentTransaction telaCarro = getFragmentManager().beginTransaction();
                               //  teste.setCustomAnimations(android.R.anim.fade_in, 0);
-                              //  teste.addSharedElement(rView, nomeCarro);
                                 telaCarro.replace(R.id.framePrincipal, visu);
                                 telaCarro.commit();
                                 meuDialog.show();
