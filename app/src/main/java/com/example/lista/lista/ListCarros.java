@@ -63,7 +63,10 @@ public class ListCarros extends AppCompatActivity
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(),
                 FragmentPagerItems.with(this)
-                        .add("Teste", ListaCarrosFragment.class)
+                        .add("Popular", ListaCarrosFragment.class)
+                        .add ("Esportivo", ListaCarrosFragment.class)
+                        .add ("Sedan", ListaCarrosFragment.class)
+                        .add ("Hatch", ListaCarrosFragment.class)
                         .create()
         );
 
@@ -98,17 +101,17 @@ public class ListCarros extends AppCompatActivity
     }
 
     public void ShowPopup(){
-        myDialog.setContentView(R.layout.fragment_visualizacao);
+        myDialog.setContentView(R.layout.fragment_filtros);
         TextView txtFechar;
-      /*  txtFechar = (TextView) myDialog.findViewById(R.id.txtClose);
+        txtFechar = (TextView) myDialog.findViewById(R.id.txtClose);
 
         txtFechar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 myDialog.dismiss();
             }
-        });*/
-      //  myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        });
+       // myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
 
     }

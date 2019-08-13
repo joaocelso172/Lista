@@ -21,7 +21,7 @@
         app:stl_indicatorInterpolation="smart"
         app:stl_indicatorGravity="bottom"
         app:stl_indicatorColor="#40C4FF"
-        app:stl_indicatorThickness="4dp"
+        app:stl_indicatorThickness="2dp"
         app:stl_indicatorWidth="auto"
         app:stl_indicatorCornerRadius="2dp"
         app:stl_overlineColor="#4D000000"
@@ -35,7 +35,7 @@
         app:stl_defaultTabTextSize="12sp"
         app:stl_defaultTabTextHorizontalPadding="16dp"
         app:stl_defaultTabTextMinWidth="0dp"
-        app:stl_distributeEvenly="false"
+        app:stl_distributeEvenly="true"
         app:stl_clickable="true"
         app:stl_titleOffset="24dp"
         app:stl_drawDecorationAfterTab="false"
@@ -72,8 +72,8 @@
 
     <FrameLayout
         android:id="@+id/frameFiltro"
-        android:layout_width="300dp"
-        android:layout_height="475dp"
+        android:layout_width="352dp"
+        android:layout_height="543dp"
         android:layout_gravity="center"
         android:scrollbars="vertical">
 

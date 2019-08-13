@@ -67,6 +67,7 @@ public class ListaCarrosFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         meuDialog = new Dialog(getContext());
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             Slide trans1 = new Slide();
             trans1.setDuration(3000);
@@ -96,7 +97,7 @@ public class ListaCarrosFragment extends Fragment {
                             @Override
                             public void onItemClick(View view, int position) {
 
-                                meuDialog.setContentView(R.layout.fragment_visualizacao);
+                               // meuDialog.setContentView(R.layout.fragment_visualizacao);
 
                                 visu = new VisualizacaoFragment();
                                 Carro carrinho = listaCarros.get(position);
@@ -107,7 +108,7 @@ public class ListaCarrosFragment extends Fragment {
                               //  teste.setCustomAnimations(android.R.anim.fade_in, 0);
                                 telaCarro.replace(R.id.framePrincipal, visu);
                                 telaCarro.commit();
-                                meuDialog.show();
+                            //    meuDialog.show();
 
                             }
 
@@ -168,35 +169,26 @@ public class ListaCarrosFragment extends Fragment {
 
     public void carregarCarros(){
 
-        Carro carro1 = new Carro();
-        carro1.setNomeCarro("A3");
-        carro1.setModeloCar(R.drawable.a32018);
+        Carro carro1 = new Carro( "A3", R.drawable.a32018);
         listaCarros.add(carro1);
 
-        Carro carro2 = new Carro();
-        carro2.setNomeCarro("Gol");
-        carro2.setModeloCar(R.drawable.civic);
+        Carro carro2 = new Carro("Gol", R.drawable.civic );
         listaCarros.add(carro2);
 
-        Carro carro3 = new Carro();
-        carro3.setNomeCarro("C3");
-        carro3.setModeloCar(R.drawable.a32018);
+        Carro carro3 = new Carro("C3", R.drawable.a32018);
         listaCarros.add(carro3);
 
-        Carro carro4 = new Carro();
-        carro4.setNomeCarro("City");
-        carro4.setModeloCar(R.drawable.a32018);
+        Carro carro4 = new Carro("City", R.drawable.a32018);
         listaCarros.add(carro4);
 
-        Carro carro5 = new Carro();
-        carro5.setNomeCarro("Fit");
-        carro5.setModeloCar(R.drawable.a32018);
+        Carro carro5 = new Carro("Fit", R.drawable.a32018);
         listaCarros.add(carro5);
 
-        Carro carro6 = new Carro();
+
+        /*Carro carro6 = new Carro();
         carro6.setNomeCarro("Civic");
         carro6.setModeloCar(R.drawable.a32018);
-        listaCarros.add(carro6);
+        listaCarros.add(carro6);*/
 
         adaCar = new adapterCar( listaCarros );
 

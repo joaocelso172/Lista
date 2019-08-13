@@ -1,6 +1,7 @@
 package com.example.lista;
 
 
+import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -30,18 +31,16 @@ public class VisualizacaoFragment extends Fragment {
 
     String nome;
     int foto;
+    Dialog mDialog;
 
     public VisualizacaoFragment() {
         // Required empty public constructor
     }
 
-    public void recebeDados(int fotoCarro){
-       // nome = nomeCarro;
-        foto = fotoCarro;
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mDialog = new Dialog(getContext());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Slide trans1 = new Slide();
             trans1.setDuration(3000);
@@ -79,6 +78,13 @@ public class VisualizacaoFragment extends Fragment {
         precoAlug.setText(informCarro.valor);*/
 
         return vFrag;
+    }
+
+    public void recebeDados(int fotoCarro){
+        // nome = nomeCarro;
+        foto = fotoCarro;
+        //  myDialog.setContentView(R.layout.fragment_visualizacao);
+        //mDialog.show();
     }
 
 }
